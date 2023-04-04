@@ -8,6 +8,10 @@
       "start": "node server.js",
       "seed": "node seeds/seed.js"
     },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Kshakely5280/MVC_project.git"
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",
@@ -25,5 +29,9 @@
       "eslint": "^7.12.1",
       "eslint-config-prettier": "^6.15.0",
       "prettier": "^2.1.2"
-    }
+    },
+    "bugs": {
+      "url": "https://github.com/Kshakely5280/MVC_project/issues"
+    },
+    "homepage": "https://github.com/Kshakely5280/MVC_project#readme"
   }
