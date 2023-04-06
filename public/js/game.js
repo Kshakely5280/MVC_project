@@ -1,10 +1,10 @@
-
+ console.log('whooo');
 var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
     physics: {
-        default: 'arcade',
+        default: '/arcade',
         arcade: {
             gravity: { y: 300 },
             debug: false
@@ -29,11 +29,11 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('sky', '/assets/sky.png');
+    this.load.image('ground', '/assets/platform.png');
+    this.load.image('star', '/assets/star.png');
+    this.load.image('bomb', '/assets/bomb.png');
+    this.load.spritesheet('dude', '/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 }
 
 function create ()
@@ -42,7 +42,7 @@ function create ()
     this.add.image(400, 300, 'sky');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = this.physics.add.staticGroup();
+    platforms = window.physics.add.staticGroup();
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
