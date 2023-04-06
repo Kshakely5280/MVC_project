@@ -31,6 +31,7 @@
       };
 
       var player;
+      var music;
       var dews;
       var cursors;
       var gameTune;
@@ -126,6 +127,11 @@
           frameRate: 10,
           repeat: -1,
         });
+         
+        // load game with sound
+        music = this.sound.add("gameTune");
+        music.play();
+
 
         // Input events
         cursors = this.input.keyboard.createCursorKeys();
@@ -181,7 +187,7 @@
 
       function update() {
         if (gameOver) {
-          return;
+          return;    
         }
 
         if (cursors.left.isDown) {
@@ -204,16 +210,6 @@
           player.setVelocityY(-400);
         }
       }
-      // THIS SHIT DOESNT WORK
-      //   function music()  {
-      //     if (!gameOver) {
-      //     var sound = this.sound.add("gameTune");
-      //     sound.play();
-      //     } else {
-      //         sound.stop()
-      //     }
-      //   }
-      //   music();
 
       function collectDew(player, dew) {
         dew.disableBody(true, true);
@@ -276,6 +272,10 @@
         sun.setVelocity(Phaser.Math.Between(-200, 200), 20);
         sun.allowGravity = false;
       }
+      function stopMusic() {
+        gameOver = true;
+        music.stop();
+      }
 
       function hitBomb(player, sun) {
         this.physics.pause();
@@ -286,7 +286,10 @@
         gameOver = true;
         var sound = this.sound.add("gameOver");
         sound.play();
+        stopMusic();
+      
       }
+
     </script>
   </body>
 </html>
