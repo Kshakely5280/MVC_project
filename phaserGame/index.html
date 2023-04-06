@@ -32,6 +32,8 @@
 
       var player;
       var dews;
+      var cursors;
+      var gameTune;
       var gulp;
       var levelUp;
       var flowerPower;
@@ -53,7 +55,9 @@
         this.load.image("flower", "assets/flower.png");
         this.load.image("tree", "assets/tree.png");
         this.load.audio("gulp", "assets/gulp.mp3");
-        this.load.audio("levelUp", "assets/levelUp.mp3")
+        this.load.audio("levelUp", "assets/levelUp.mp3");
+        this.load.audio("gameTune", "assets/gameTune.mp3");
+        this.load.audio("gameOver", "assets/gameOver.mp3");
         this.load.image("platformWood", "assets/platformWood.png");
         this.cameras.main.setBounds(
           0,
@@ -193,11 +197,23 @@
 
           player.anims.play("turn");
         }
-
-        if (cursors.up.isDown && player.body.touching.down) {
+        if (
+          Phaser.Input.Keyboard.JustDown(cursors.space) &&
+          player.body.touching.down
+        ) {
           player.setVelocityY(-400);
         }
       }
+      // THIS SHIT DOESNT WORK
+      //   function music()  {
+      //     if (!gameOver) {
+      //     var sound = this.sound.add("gameTune");
+      //     sound.play();
+      //     } else {
+      //         sound.stop()
+      //     }
+      //   }
+      //   music();
 
       function collectDew(player, dew) {
         dew.disableBody(true, true);
@@ -263,12 +279,13 @@
 
       function hitBomb(player, sun) {
         this.physics.pause();
-
         player.setTint(0xff0000);
 
         player.anims.play("turn");
 
         gameOver = true;
+        var sound = this.sound.add("gameOver");
+        sound.play();
       }
     </script>
   </body>
