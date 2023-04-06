@@ -13,7 +13,7 @@
   <body>
     <script type="text/javascript">
       var config = {
-        type: Phaser.CANVAS,
+        type: Phaser.AUTO,
         width: 1280,
         height: 720,
         physics: {
@@ -31,10 +31,11 @@
       };
 
       var player;
-      var stars;
-      var bombs;
+      var dews;
+      var suns;
       var platforms;
       var cursors;
+      var platformWood;
       var score = 0;
       var gameOver = false;
       var scoreText;
@@ -43,8 +44,12 @@
       function preload() {
         this.load.image("sky", "assets/sky.png");
         this.load.image("ground", "assets/platform.png");
-        this.load.image("star", "assets/star.png");
-        this.load.image("bomb", "assets/bomb.png");
+        this.load.image("dew", "assets/dew.png");
+        this.load.image("sun", "assets/sun.png");
+        this.load.image("bush", "assets/bush.png");
+        this.load.image("flower", "assets/flower.png");
+        this.load.image("tree", "assets/tree.png");
+        this.load.image("platformWood", "assets/platformWood.png");
         this.load.spritesheet("dude", "assets/dude.png", {
           frameWidth: 32,
           frameHeight: 48,
@@ -52,15 +57,29 @@
       }
 
       function create() {
-        //  A simple background for our game
-        this.add.image(400, 300, "sky");
-
+        this.background = this.add.tileSprite(
+          0,
+          0,
+          game.config.width,
+          game.config.height,
+          "sky"
+        );
+        // Set the tile sprite's origin to (0, 0)
+        this.background.setOrigin(0, 0);
         //  The platforms group contains the ground and the ledges we can jump on
         platforms = this.physics.add.staticGroup();
-
+        platformWood = this.physics.add.staticGroup();
         // Create the ground
-        platforms.create(400, 568, "ground").setScale(2).refreshBody();
+        platforms.create(400, 700, "ground").setScale(5, 6.5).refreshBody();
+        platforms.create(600, 400, "ground");
+        platforms.create(50, 250, "ground");
+        platforms.create(750, 220, "ground");
+        platforms.create(1300, 100, "ground");
+        platformWood.create(1250, 500, "platformWood");
+        const bush = this.add.image(1200, 475, "bush");
+        bush.setScale(1);
 
+        
         // The player and its settings
         player = this.physics.add.sprite(100, 450, "dude");
         player.setBounce(0.2);
@@ -91,17 +110,17 @@
         cursors = this.input.keyboard.createCursorKeys();
 
         // Stars to collect
-        stars = this.physics.add.group({
-          key: "star",
+        dews = this.physics.add.group({
+          key: "dew",
           repeat: 11,
-          setXY: { x: 12, y: 0, stepX: 70 },
+          setXY: { x: 12, y: 0, stepX: 110 },
         });
 
-        stars.children.iterate(function (child) {
+        dews.children.iterate(function (child) {
           child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         });
 
-        bombs = this.physics.add.group();
+        suns = this.physics.add.group();
 
         // The score
         scoreText = this.add.text(16, 16, "score: 0", {
@@ -111,40 +130,15 @@
 
         // Collide the player and the stars with the platforms
         this.physics.add.collider(player, platforms);
-        this.physics.add.collider(stars, platforms);
-        this.physics.add.collider(bombs, platforms);
+        this.physics.add.collider(dews, platforms);
+        this.physics.add.collider(suns, platforms);
+        this.physics.add.collider(player, platformWood);
+        this.physics.add.collider(dews, platformWood);
+        this.physics.add.collider(suns, platformWood);
 
         // Check if the player overlaps with any of the stars or bombs
-        this.physics.add.overlap(player, stars, collectStar, null, this);
-        this.physics.add.collider(player, bombs, hitBomb, null, this);
-
-        var platformX = 400;
-        var platformY = 400;
-        for (var i = 0; i < 10; i++) {
-          platforms.create(platformX, platformY, "ground");
-          platformX += Phaser.Math.Between(200, 300);
-          platformY = Phaser.Math.Between(200, 400);
-        }
-
-        // Set the camera to follow the player
-        this.cameras.main.setBounds(0, 0, 10000 * 2, 720);
-        this.physics.world.setBounds(0, 0, 10000, 720);
-        this.cameras.main.startFollow(player);
-        this.cameras.main.setFollowOffset(0, 200);
-        this.cameras.main.on("cameraupdatemove", function (camera) {
-          var platformX = camera.scrollX + 800;
-          var platformY = Phaser.Math.Between(200, 400);
-
-          if (platformX > lastPlatformX) {
-            var numPlatforms = Phaser.Math.Between(1, 3);
-            for (var i = 0; i < numPlatforms; i++) {
-              var platform = platforms.create(platformX, platformY, "ground");
-              platformX += Phaser.Math.Between(200, 300);
-              platformY = Phaser.Math.Between(200, 400);
-              lastPlatformX = platformX;
-            }
-          }
-        });
+        this.physics.add.overlap(player, dews, collectStar, null, this);
+        this.physics.add.collider(player, suns, hitBomb, null, this);
       }
 
       function update() {
@@ -167,20 +161,20 @@
         }
 
         if (cursors.up.isDown && player.body.touching.down) {
-          player.setVelocityY(-330);
+          player.setVelocityY(-400);
         }
       }
 
-      function collectStar(player, star) {
-        star.disableBody(true, true);
+      function collectStar(player, dew) {
+        dew.disableBody(true, true);
 
         //  Add and update the score
         score += 10;
         scoreText.setText("Score: " + score);
 
-        if (stars.countActive(true) === 0) {
+        if (dews.countActive(true) === 0) {
           //  A new batch of stars to collect
-          stars.children.iterate(function (child) {
+          dews.children.iterate(function (child) {
             child.enableBody(true, child.x, 0, true, true);
           });
 
@@ -189,15 +183,15 @@
               ? Phaser.Math.Between(400, 800)
               : Phaser.Math.Between(0, 400);
 
-          var bomb = bombs.create(x, 16, "bomb");
-          bomb.setBounce(1);
-          bomb.setCollideWorldBounds(true);
-          bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-          bomb.allowGravity = false;
+          var sun = suns.create(x, 16, "sun");
+          sun.setBounce(1);
+          sun.setCollideWorldBounds(true);
+          sun.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          sun.allowGravity = false;
         }
       }
 
-      function hitBomb(player, bomb) {
+      function hitBomb(player, sun) {
         this.physics.pause();
 
         player.setTint(0xff0000);
