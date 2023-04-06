@@ -88,6 +88,10 @@
           game.config.height,
           "sky"
         );
+  
+
+        
+
         // Set the tile sprite's origin to (0, 0)
         this.background.setOrigin(0, 0);
         //  The platforms group contains the ground and the ledges we can jump on
@@ -100,9 +104,9 @@
         platforms.create(50, 250, "ground");
         platforms.create(750, 220, "ground");
         platforms.create(1300, 100, "ground");
-        platformWood.create(1250, 500, "platformWood");
-        const bush = this.add.image(1200, 479, "bush");
-        bush.setScale(1);
+        //platformWood.create(1250, 500, "platformWood");
+        //const bush = this.add.image(1200, 479, "bush");
+       // bush.setScale(1);
 
         // The player and its settings
         player = this.physics.add.sprite(100, 450, "dude");
@@ -213,6 +217,7 @@
         ) {
           player.setVelocityY(-400);
           hop.play();
+          
         }
       }
 
@@ -239,8 +244,10 @@
           var sun = suns.create(x, 16, "sun");
           sun.setBounce(1);
           sun.setCollideWorldBounds(true);
-          sun.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          sun.setVelocity(Phaser.Math.Between(-300, 300), 20);
           sun.allowGravity = false;
+          var sound = this.sound.add("levelUp");
+          sound.play();
         }
       }
 
