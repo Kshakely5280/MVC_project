@@ -33,6 +33,7 @@
       var player;
       var music;
       var dews;
+      var hop;
       var cursors;
       var gameTune;
       var gulp;
@@ -58,6 +59,7 @@
         this.load.audio("gulp", "assets/gulp.mp3");
         this.load.audio("levelUp", "assets/levelUp.mp3");
         this.load.audio("gameTune", "assets/gameTune.mp3");
+        this.load.audio("hop", "assets/hop.mp3");
         this.load.audio("gameOver", "assets/gameOver.mp3");
         this.load.image("platformWood", "assets/platformWood.png");
         this.cameras.main.setBounds(
@@ -127,11 +129,13 @@
           frameRate: 10,
           repeat: -1,
         });
-         
+
         // load game with sound
         music = this.sound.add("gameTune");
         music.play();
 
+        // hop sound
+        hop = this.sound.add("hop");
 
         // Input events
         cursors = this.input.keyboard.createCursorKeys();
@@ -187,7 +191,7 @@
 
       function update() {
         if (gameOver) {
-          return;    
+          return;
         }
 
         if (cursors.left.isDown) {
@@ -208,6 +212,7 @@
           player.body.touching.down
         ) {
           player.setVelocityY(-400);
+          hop.play();
         }
       }
 
@@ -287,9 +292,7 @@
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
-      
       }
-
     </script>
   </body>
 </html>
