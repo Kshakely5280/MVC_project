@@ -32,6 +32,7 @@
 
       var player;
       var dews;
+      var flowerPower;
       var suns;
       var platforms;
       var cursors;
@@ -50,6 +51,18 @@
         this.load.image("flower", "assets/flower.png");
         this.load.image("tree", "assets/tree.png");
         this.load.image("platformWood", "assets/platformWood.png");
+        this.cameras.main.setBounds(
+          0,
+          0,
+          game.config.width,
+          game.config.height
+        );
+        this.physics.world.setBounds(
+          0,
+          0,
+          game.config.width,
+          game.config.height
+        );
         this.load.spritesheet("dude", "assets/dude.png", {
           frameWidth: 32,
           frameHeight: 48,
@@ -69,6 +82,7 @@
         //  The platforms group contains the ground and the ledges we can jump on
         platforms = this.physics.add.staticGroup();
         platformWood = this.physics.add.staticGroup();
+        
         // Create the ground
         platforms.create(400, 700, "ground").setScale(5, 6.5).refreshBody();
         platforms.create(600, 400, "ground");
@@ -76,10 +90,9 @@
         platforms.create(750, 220, "ground");
         platforms.create(1300, 100, "ground");
         platformWood.create(1250, 500, "platformWood");
-        const bush = this.add.image(1200, 475, "bush");
+        const bush = this.add.image(1200, 479, "bush");
         bush.setScale(1);
 
-        
         // The player and its settings
         player = this.physics.add.sprite(100, 450, "dude");
         player.setBounce(0.2);
@@ -112,8 +125,14 @@
         // Stars to collect
         dews = this.physics.add.group({
           key: "dew",
-          repeat: 11,
-          setXY: { x: 12, y: 0, stepX: 110 },
+          repeat: 20,
+          setXY: { x: 12, y: 0, stepX: 62 },
+        });
+
+        // Special flower Power
+        flowerPower = this.physics.add.group({
+            key: "flower",
+            setXY: { x: 1200, y: 0 },
         });
 
         dews.children.iterate(function (child) {
@@ -135,10 +154,15 @@
         this.physics.add.collider(player, platformWood);
         this.physics.add.collider(dews, platformWood);
         this.physics.add.collider(suns, platformWood);
+        this.physics.add.collider(flowerPower, platforms);
 
         // Check if the player overlaps with any of the stars or bombs
         this.physics.add.overlap(player, dews, collectStar, null, this);
+        this.physics.add.overlap(player, flowerPower, collectFlower, null, this);
         this.physics.add.collider(player, suns, hitBomb, null, this);
+
+        this.cameras.main.startFollow(player);
+        this.cameras.main.setFollowOffset(-200, 0);
       }
 
       function update() {
@@ -189,6 +213,12 @@
           sun.setVelocity(Phaser.Math.Between(-200, 200), 20);
           sun.allowGravity = false;
         }
+      }
+
+      function collectFlower(player, flowerPower) {
+        flowerPower.disableBody(true, true);
+        score += 50;
+        scoreText.setText("Score: " + score);
       }
 
       function hitBomb(player, sun) {
