@@ -32,6 +32,8 @@
 
       var player;
       var dews;
+      var gulp;
+      var levelUp;
       var flowerPower;
       var suns;
       var platforms;
@@ -50,6 +52,8 @@
         this.load.image("bush", "assets/bush.png");
         this.load.image("flower", "assets/flower.png");
         this.load.image("tree", "assets/tree.png");
+        this.load.audio("gulp", "assets/gulp.mp3");
+        this.load.audio("levelUp", "assets/levelUp.mp3")
         this.load.image("platformWood", "assets/platformWood.png");
         this.cameras.main.setBounds(
           0,
@@ -82,7 +86,7 @@
         //  The platforms group contains the ground and the ledges we can jump on
         platforms = this.physics.add.staticGroup();
         platformWood = this.physics.add.staticGroup();
-        
+
         // Create the ground
         platforms.create(400, 700, "ground").setScale(5, 6.5).refreshBody();
         platforms.create(600, 400, "ground");
@@ -131,8 +135,8 @@
 
         // Special flower Power
         flowerPower = this.physics.add.group({
-            key: "flower",
-            setXY: { x: 1200, y: 0 },
+          key: "flower",
+          setXY: { x: Phaser.Math.Between(20, 1200), y: 0 },
         });
 
         dews.children.iterate(function (child) {
@@ -157,8 +161,14 @@
         this.physics.add.collider(flowerPower, platforms);
 
         // Check if the player overlaps with any of the stars or bombs
-        this.physics.add.overlap(player, dews, collectStar, null, this);
-        this.physics.add.overlap(player, flowerPower, collectFlower, null, this);
+        this.physics.add.overlap(player, dews, collectDew, null, this);
+        this.physics.add.overlap(
+          player,
+          flowerPower,
+          collectFlower,
+          null,
+          this
+        );
         this.physics.add.collider(player, suns, hitBomb, null, this);
 
         this.cameras.main.startFollow(player);
@@ -189,12 +199,14 @@
         }
       }
 
-      function collectStar(player, dew) {
+      function collectDew(player, dew) {
         dew.disableBody(true, true);
 
         //  Add and update the score
         score += 10;
         scoreText.setText("Score: " + score);
+        var sound = this.sound.add("gulp");
+        sound.play();
 
         if (dews.countActive(true) === 0) {
           //  A new batch of stars to collect
@@ -203,8 +215,8 @@
           });
 
           var x =
-            player.x < 400
-              ? Phaser.Math.Between(400, 800)
+            player.x < 600
+              ? Phaser.Math.Between(1280, 720)
               : Phaser.Math.Between(0, 400);
 
           var sun = suns.create(x, 16, "sun");
@@ -217,8 +229,36 @@
 
       function collectFlower(player, flowerPower) {
         flowerPower.disableBody(true, true);
-        score += 50;
+        score += 100;
         scoreText.setText("Score: " + score);
+        var sound = this.sound.add("levelUp");
+        sound.play();
+
+        var newFlowerPower = this.physics.add.group({
+          key: "flower",
+          setXY: {
+            x: Phaser.Math.Between(0, 1280),
+            y: Phaser.Math.Between(0, 0),
+          },
+        });
+        newFlowerPower.children.iterate(function (child) {
+          child.setBounceY(Phaser.Math.FloatBetween(0.2, 0.5));
+          child.setCollideWorldBounds(true);
+        });
+        this.physics.add.collider(newFlowerPower, platforms);
+        this.physics.add.overlap(
+          player,
+          newFlowerPower,
+          collectFlower,
+          null,
+          this
+        );
+        var x = Phaser.Math.Between(0, 800);
+        var sun = suns.create(x, 16, "sun");
+        sun.setBounce(1);
+        sun.setCollideWorldBounds(true);
+        sun.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        sun.allowGravity = false;
       }
 
       function hitBomb(player, sun) {
