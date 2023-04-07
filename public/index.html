@@ -132,11 +132,11 @@ function create ()
 
 function update ()
 {
-    if (gameOver)
-    {
+    if (gameOver) {
+        // redirect to highscore page
+        window.location.href = "/view/highscore";
         return;
     }
-
     if (cursors.left.isDown)
     {
         player.setVelocityX(-160);
