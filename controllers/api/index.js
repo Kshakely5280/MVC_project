@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const gameRoute = require('./gameRoute');
-const highscoreRoutes = require('./highscorepageRoutes');
+const highscoreRoutes = require('./highscoreRoutes');
 const profileRoutes = require('./profileRoutes');
 
 
