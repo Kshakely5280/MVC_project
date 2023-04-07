@@ -1,0 +1,13 @@
+/* body {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+
+:not(#game-container) {
+    background-image: url('../assets/windowBackground.jpg');
+    background-size: cover;
+    margin: 50px auto;
+    padding: 10px;
+  }
+   */

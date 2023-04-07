@@ -7,14 +7,14 @@ router.get('/', async (req, res) => {
         include: [
           {
             model: User,
-            attributes: ['name'],
+            attributes: ['name', 'score', 'createdAt'],
           },
         ],
       });
   
   
       // Pass serialized data and session flag into template
-      res.render('', { 
+      res.render('highscore', { 
         highscoreData, 
         logged_in: req.session.logged_in 
       });
