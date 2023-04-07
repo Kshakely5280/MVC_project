@@ -1,6 +1,4 @@
 
-
-
 [
     {
     "score": 100,
@@ -15,6 +13,6 @@
   {
     "score": 150,
     "createdAt": 20,
-    "userId": 2
+    "userId": 3
   }
 ]
