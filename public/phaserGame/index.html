@@ -301,8 +301,19 @@
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
-      }
+
+        //when the game has been ended, it should save the score and push it into the highscore seed
+        if (gameOver) {
+           alert(`Game over! Your score was ${score}`);
+           let highscoreData = JSON.parse(fs.readFileSync('highscoreData.json'));
+           highscoreData.scores.push(score);
+           fs.writeFileSync('highscoreData.json', JSON.stringify(highscoreData));
+          }
+// unsure if working as of yet
+
+      };
     </script>
+    
   </body>
 </html>
 
