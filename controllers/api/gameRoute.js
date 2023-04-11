@@ -1,5 +1,7 @@
 const router = require('express').Router();
-router.get('/', async (req, res) => {
-    res.sendFile('index.html')
+const withAuth = require('../../utils/auth');
+
+router.get('/', withAuth, async (req, res) => {
+    res.sendFile('/phaserGame/index.html')
 });
 module.exports = router
