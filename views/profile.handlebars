@@ -5,20 +5,17 @@
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6">
+  <div class="col-md-6 text-center">
     <h3>Welcome, {{user.name}}!</h3>
-
     <p>
       <a href="/game"><button class="btn btn-primary">Start the Game</button></a>
     </p>
 
-        <p>
-      <a href="/highscores"><button class="btn btn-primary">View High</button></a>
-    </p>
-
-
-
+    <h2>High Scores</h2>
+      {{#each HighScore.score as |score| }}
+    <p>{{user.name}}: {{score}}</p>
+      {{/each}}
   </div>
-  </div>
+</div>
 
 <script src="/js/profile.js"></script>
