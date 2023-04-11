@@ -6,12 +6,23 @@
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <style type="text/css">
-      body {
-        margin: 0;
+    canvas {
+      display: block;
+      margin: auto;
+      };
+    #game {
+       margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
+
     </style>
   </head>
   <body>
+    <div id="game">
     <script type="text/javascript">
       var config = {
         type: Phaser.AUTO,
@@ -303,7 +314,6 @@
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
-        //when the game has been ended, it should save the score and push it into the highscore seed
         if (gameOver) {
           fetch('/api/gamepage/scores', {
             method: 'POST',
@@ -320,13 +330,9 @@
             }
           });}
 
-// unsure if working as of yet
 
       };
     </script>
-    
+    </div>
   </body>
-</html>
-
-</body>
 </html>
