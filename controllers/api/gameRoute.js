@@ -23,10 +23,14 @@ router.post('/scores', async (req, res) => {
     console.log('its goin');
 });
 
-//new route for get      let highscoreData = fs.readFileSync('highscoreData.json', 'utf8', (error, data) => {
-        // let highscoreData = fs.readFileSync('highscoreData.json', 'utf8', (error, data) => {
-        //     error ? console.error(error) : console.log('howdy george');
-        // });
+router.get('/scores', async (req, res) => {
+    let highscoreData = fs.readFileSync('highscoreData.json', 'utf8', (error, data) => {
+        error ? console.error(error) : console.log('am i getting it now mr.krabs?');
+    });
+    let scores = JSON.parse(highscoreData).scores;
+    
+    res.status(200).json({ scores });
+});
 
 
 module.exports = router

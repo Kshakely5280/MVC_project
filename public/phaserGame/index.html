@@ -303,10 +303,21 @@
         stopMusic();
         //when the game has been ended, it should save the score and push it into the highscore seed
         if (gameOver) {
-           alert(`Game over! Your score was ${score}`);
-           //fetchcall post call to /api/gamepage/score "score"
+          fetch('/api/gamepage/scores', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ scores: score })
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('Score sent successfully');
+            } else {
+              console.log('What did you do wrong this time Dave:', error);
+            }
+          });}
 
-          }
 // unsure if working as of yet
 
       };
