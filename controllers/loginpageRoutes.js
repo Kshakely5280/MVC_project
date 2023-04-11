@@ -3,7 +3,7 @@ const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
-  res.render('login')
+  res.render('login');
 })
 
 
@@ -22,7 +22,11 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/userlogin', withAuth, async (req, res) => {
+// router.post('/login-test', async (req, res) => {
+// });
+
+router.post('/userlogin', async (req, res) => {
+  console.log('route hit!');
   try {
     const { name, password } = req.body;
     let userData = await User.findOne({ where: { name } });
