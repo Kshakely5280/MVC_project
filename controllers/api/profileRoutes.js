@@ -34,8 +34,5 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
-// i think this is where click function would link to button to take you to game page
-
-
 
 module.exports = router;
