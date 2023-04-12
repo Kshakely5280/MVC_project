@@ -15,7 +15,7 @@ router.get('/', withAuth, async (req, res) => {
 
 
     // Pass serialized data and session flag into template
-    res.render('highscore', { 
+    res.render('profile', { 
       highscoreData, 
       logged_in: req.session.logged_in 
     });
