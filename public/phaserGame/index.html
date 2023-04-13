@@ -2,19 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>XTREEM Water Simulator 2</title>
+    <title>Dew Drop Adventure</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style type="text/css">
-      body {
-        margin: 0;
-      }
+/* moved to style.css */
     </style>
   </head>
   <body>
+    <div id="game">
     <script type="text/javascript">
       var config = {
         type: Phaser.AUTO,
+        width: window.innerWidth,
+        height: window.innerHeight,
         width: 1280,
         height: 720,
         physics: {
@@ -193,6 +194,7 @@
 
         this.cameras.main.startFollow(player);
         this.cameras.main.setFollowOffset(-200, 0);
+        
       }
 
       function update() {
@@ -298,24 +300,60 @@
         player.anims.play("turn");
 
         gameOver = true;
+        
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
 
-        //when the game has been ended, it should save the score and push it into the highscore seed
         if (gameOver) {
-           alert(`Game over! Your score was ${score}`);
-           let highscoreData = JSON.parse(fs.readFileSync('highscoreData.json'));
-           highscoreData.scores.push(score);
-           fs.writeFileSync('highscoreData.json', JSON.stringify(highscoreData));
-          }
-// unsure if working as of yet
+          var gameOverText = this.add.text(370, 200, 'You Got Thirsted', { fontSize: '60px', fill: '#fff' });
+          // replay game
+          var profileText = this.add.text(680, 360, 'Return To Profile?', { fontSize: '45px', fill: '#fff'})
+          .setInteractive()
+            .on('pointerover', () => {
+              profileText.setStyle({ fontSize: '45px', fill: '#aaa'})
+            })
+            .on('pointerout', () => {
+              profileText.setStyle({ fontSize: '45px', fill: '#fff'})
+            })
+            .on('pointerdown', () => {
+              window.location.href = "/api/profile"
+            });
+            //go to profile page
+          var playAgainText = this.add.text(200, 360, 'Play Again?', { fontSize: '45px', fill: '#fff'})
+            .setInteractive()
+            .on('pointerover', () => {
+              playAgainText.setStyle({ fontSize: '45px', fill: '#aaa'})
+            })
+            .on('pointerout', () => {
+              playAgainText.setStyle({ fontSize: '45px', fill: '#fff'})
+            })
+            .on('pointerdown', () => {
+              location.reload();
+            });
+        }
+
+
+        if (gameOver) {
+          fetch('/api/gamepage/scores', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ scores: score })
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('Score sent successfully');
+            } else {
+              console.log('What did you do wrong this time Dave:', error);
+            }
+          });
+        }
+
 
       };
     </script>
-    
+    </div>
   </body>
-</html>
-
-</body>
 </html>

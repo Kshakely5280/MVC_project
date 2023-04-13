@@ -18,8 +18,11 @@ const loginFormHandler = async (event) => {
       if (response.ok) {
         // If successful, redirect the browser to the profile page
         document.location.replace('/api/profile');
+
       } else {
-        alert(response.statusText);
+        let message = await response.json();
+        const errorMessageEl = document.querySelector('#login-error-message');
+        errorMessageEl.textContent = message.message;
       }
     }
   };
@@ -40,7 +43,9 @@ const loginFormHandler = async (event) => {
       if (response.ok) {
         document.location.replace('/profile');
       } else {
-        alert(response.statusText);
+        const message = await response.json();
+        const errorMessageEl = document.querySelector('#login-error-message');
+        errorMessageEl.textContent = message.message;
       }
     }
   };
@@ -49,6 +54,3 @@ const loginFormHandler = async (event) => {
     .querySelector('.login-form')
     .addEventListener('submit', loginFormHandler);
   
-  document
-    .querySelector('.signup-form')
-    .addEventListener('submit', signupFormHandler);

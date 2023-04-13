@@ -1,21 +1,4 @@
 {
-  "scores": []
+  "scores  REAL SCORES IN OTHER HIGHSCOREDATA JSON": [] 
 }
 
-// [
-//     {
-//     "score": 100,
-//     "createdAt": 20,
-//     "userId": 1
-// },
-//   {
-//     "score": 200,
-//     "createdAt": 2,
-//     "userId": 1
-//   },
-//   {
-//     "score": 150,
-//     "createdAt": 20,
-//     "userId": 3
-//   }
-// ]
