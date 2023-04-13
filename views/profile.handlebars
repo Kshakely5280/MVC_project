@@ -12,8 +12,8 @@
     </p>
 
     <h2>High Scores</h2>
-      {{#each HighScore.score as |score| }}
-    <p>{{user.name}}: {{score}}</p>
+      {{#each highscoreData.scores as |scores| }}
+    <p>{{user.name}}: {{scores}}</p>
       {{/each}}
   </div>
 </div>

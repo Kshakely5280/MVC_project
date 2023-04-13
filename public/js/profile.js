@@ -29,7 +29,7 @@ const newFormHandler = async (event) => {
     });
   };
   
-  if (name && score && createdAt) {
+  if (name && score && createdAt) {}
 
 
 
