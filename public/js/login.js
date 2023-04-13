@@ -36,12 +36,17 @@ const loginFormHandler = async (event) => {
   
       if (response.ok) {
         document.location.replace('/profile');
+
+        
       } else {
         const message = await response.json();
         const errorMessageEl = document.querySelector('#login-error-message');
         errorMessageEl.textContent = message.message;
       }
     }
+    const message = await response.json();
+    const accountCreatedEl = document.querySelector('#accountCreated');
+    accountCreatedEl.textContent = message.message;
   };
   
   document

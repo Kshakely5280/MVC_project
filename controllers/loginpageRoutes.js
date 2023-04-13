@@ -4,7 +4,7 @@ const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   res.render('login');
-})
+});
 
 router.post('/', async (req, res) => {
   try {
@@ -27,10 +27,22 @@ router.post('/userlogin', async (req, res) => {
     let userData = await User.findOne({ where: { name } });
 
     if (!userData) {
+      if (password.length < 8) {
+        return res
+          .status(400)
+          .json({
+            message: 'Your Password must be at least 8 characters long',
+          });
+      }
       userData = await User.create({ name, password });
-      return res.json({
-        user: userData,
-        message: 'Successfully Created a New Account',
+      req.session.save(() => {
+        req.session.name = userData.name;
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        return res.json({
+          user: userData,
+          message: 'Successfully Created a New Account',
+        });
       });
     } else {
       const validPassword = await userData.checkPassword(password);
@@ -38,16 +50,18 @@ router.post('/userlogin', async (req, res) => {
         return res
           .status(400)
           .json({ message: 'Incorrect password, please try again' });
+      } else {
+        req.session.save(() => {
+          req.session.name = userData.name;
+          req.session.user_id = userData.id;
+          req.session.logged_in = true;
+          return res.json({
+            user: userData,
+            message: 'You are now logged in!',
+          });
+        });
       }
     }
-
-    req.session.save(() => {
-      req.session.name = userData.name;
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      return res.json({ user: userData, message: 'You are now logged in!' });
-    });
   } catch (err) {
     return res.status(400).json(err);
   }
