@@ -29,4 +29,6 @@ router.get('/scores', async (req, res) => {
     res.status(200).json({ scores });
 });
 
+
+
 module.exports = router
