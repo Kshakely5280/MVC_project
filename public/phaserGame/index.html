@@ -304,6 +304,36 @@
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
+
+        if (gameOver) {
+          var gameOverText = this.add.text(370, 200, 'You Got Thirsted', { fontSize: '60px', fill: '#fff' });
+          // replay game
+          var profileText = this.add.text(680, 360, 'Return To Profile?', { fontSize: '45px', fill: '#fff'})
+          .setInteractive()
+            .on('pointerover', () => {
+              profileText.setStyle({ fontSize: '45px', fill: '#aaa'})
+            })
+            .on('pointerout', () => {
+              profileText.setStyle({ fontSize: '45px', fill: '#fff'})
+            })
+            .on('pointerdown', () => {
+              window.location.href = "/api/profile"
+            });
+            //go to profile page
+          var playAgainText = this.add.text(200, 360, 'Play Again?', { fontSize: '45px', fill: '#fff'})
+            .setInteractive()
+            .on('pointerover', () => {
+              playAgainText.setStyle({ fontSize: '45px', fill: '#aaa'})
+            })
+            .on('pointerout', () => {
+              playAgainText.setStyle({ fontSize: '45px', fill: '#fff'})
+            })
+            .on('pointerdown', () => {
+              location.reload();
+            });
+        }
+
+
         if (gameOver) {
           fetch('/api/gamepage/scores', {
             method: 'POST',
