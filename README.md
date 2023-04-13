@@ -5,7 +5,7 @@ This was a group collaboration for our second Bootcamp project. Our goals for th
 ## Table Of Contents:
 * [Installation Instructions](#install)
 * [Application Usage](#usage)
-* [Contribution Guidelines](#guidelines)
+* [Contributors](#guidelines)
 * [Application Testing](#test)
 * [Questions and Contact Information](#contact)
 ### Installation Instructions <a name="install"></a>
@@ -15,8 +15,15 @@ To install, you will need the following dependencies installed locally: bcrypt, 
 
 ### Application Usage <a name="usage"></a>
 This is the product of group collaboration and to provide a fun user experience.
-### Contribution Guidelines <a name="guidelines"></a>
-N/A
+### Contributors <a name="guidelines"></a>
+Kyle! https://github.com/Kshakely5280
+
+Dylan! https://github.com/agnellod
+
+Kirstyn! https://github.com/kirstynrowen
+
+Dave! https://github.com/DaverCodes
+
 ### Application Testing <a name="test"></a>
 Deployed here!: https://cryptic-bastion-55736.herokuapp.com/
 ### Questions and Contact Information <a name="contact"></a>
