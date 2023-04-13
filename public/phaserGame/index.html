@@ -194,6 +194,7 @@
 
         this.cameras.main.startFollow(player);
         this.cameras.main.setFollowOffset(-200, 0);
+        
       }
 
       function update() {
@@ -299,6 +300,7 @@
         player.anims.play("turn");
 
         gameOver = true;
+        
         var sound = this.sound.add("gameOver");
         sound.play();
         stopMusic();
@@ -316,7 +318,8 @@
             } else {
               console.log('What did you do wrong this time Dave:', error);
             }
-          });}
+          });
+        }
 
 
       };
