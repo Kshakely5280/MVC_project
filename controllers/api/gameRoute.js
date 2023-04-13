@@ -4,27 +4,29 @@ const fs = require('fs');
 
 
 
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     res.sendFile('/phaserGame/index.html')
 });
 
+// localhost:3001/api/gamepage/scores
 router.post('/scores', async (req, res) => {
-    let highscoreData = fs.readFileSync('highscoreData.json', 'utf8', (error, data) => {
+    let highscoreData = fs.readFileSync('highscore.json', 'utf8', (error, data) => {
         error ? console.error(error) : console.log('howdy george');
     });
-    let scores = JSON.parse(highscoreData).scores;
+    let scoresArray = JSON.parse(highscoreData).scoresArray;
     
     console.log(req.body.scores);
-    console.log(scores);
-  scores.push(req.body.scores);
+    console.log(req.session.name);
+    const newObj = {score:req.body.scores, username: req.session.name}
+    scoresArray.push(newObj);
     
-    fs.writeFileSync('highscoreData.json', JSON.stringify({scores}));
+    fs.writeFileSync('highscore.json', JSON.stringify({scoresArray}));
     res.status(200).end()
     console.log('its goin');
 });
 
 router.get('/scores', async (req, res) => {
-    let highscoreData = fs.readFileSync('highscoreData.json', 'utf8', (error, data) => {
+    let highscoreData = fs.readFileSync('highscore.json', 'utf8', (error, data) => {
         error ? console.error(error) : console.log('am i getting it now mr.krabs?');
     });
     let scores = JSON.parse(highscoreData).scores;

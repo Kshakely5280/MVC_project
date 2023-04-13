@@ -1,14 +1,14 @@
 <div class="row mt-4">
   <div class="col-md-6 text-center">
     <div id="accountCreated"></div>
-    <h3>Welcome, {{user.name}}!</h3>
+    <h3>Welcome, {{user}}!</h3>
     <p>
       <a href="/phaserGame/index.html"><button class="btn btn-dark">Start the Game</button></a>
     </p>
 
     <h2>High Scores</h2>
-      {{#each highscoreData.scores as |scores| }}
-    <p>{{user.name}}: {{scores}}</p>
+      {{#each scores}}
+    <p>{{username}}, {{score}}</p>
       {{/each}}
   </div>
 </div>
