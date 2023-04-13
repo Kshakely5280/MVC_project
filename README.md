@@ -15,8 +15,9 @@ This is the product of group collaboration and to provide a fun user experience.
 ### Contribution Guidelines <a name="guidelines"></a>
 N/A
 ### Application Testing <a name="test"></a>
-N/A
+Deployed here!: https://cryptic-bastion-55736.herokuapp.com/
 ### Questions and Contact Information <a name="contact"></a>
-To see the video walkthrough, please click here: https://www.loom.com/share/62032da12baa48aa97ed72ae30d98d18. Please sent questions to kyleshakely@yahoo.com or reach me through Github, link: https://github.com/kshakely5280
+To see the video walkthrough, please click here: . 
+Please sent questions to kyleshakely@yahoo.com or reach me through Github, link: https://github.com/kshakely5280
 #### License Information <a name="license"></a>
 ##### Click to learn more about this license: [![License](https://img.shields.io/badge/License-unlicense-blue.svg)](https://opensource.org/licenses/unlicense)
