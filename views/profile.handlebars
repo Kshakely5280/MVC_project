@@ -5,12 +5,16 @@
     <p>
       <a href="/phaserGame/index.html"><button class="btn btn-dark">Start the Game</button></a>
     </p>
-
-    <h2>High Scores</h2>
+  </div>
+  <div class="card overflow-auto col-md-6 text-center">
+    <div class="card-body">
+      <h2>Recent Scores</h2>
       {{#each scores}}
-    <p>{{username}}, {{score}}</p>
+      <div class="score-entry">
+        <p>{{username}}, {{score}}</p>
+      </div>
       {{/each}}
+    </div>
   </div>
 </div>
-
 <script src="/js/profile.js"></script>
