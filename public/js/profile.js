@@ -1,50 +1,37 @@
 const newFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const name = document.querySelector('#highscore-name').value.trim();
-    const score = document.querySelector('#score-value').value.trim();
-    const createdAt = document.querySelector('#created-value').value.trim();
+  event.preventDefault();
 
-    // if (score) {
-    //   const response = await fetch(`/api/gamepage/scores`,  {
-    //     method: 'POST',
-    //     body: JSON.stringify(score),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
-  
-    //   if (response.ok) {
-    //     document.location.replace('/profile');
-    //   } else {
-    //     alert('Failed to create highscore');
-    //   }
-    // }
-  //   if (score){
+  const name = document.querySelector('#highscore-name').value.trim();
+  const score = document.querySelector('#score-value').value.trim();
+  const createdAt = document.querySelector('#created-value').value.trim();
+
+  // if (score) {
   //   const response = await fetch(`/api/gamepage/scores`,  {
-  //     method: 'GET',
+  //     method: 'POST',
+  //     body: JSON.stringify(score),
   //     headers: {
   //       'Content-Type': 'application/json',
   //     },
   //   });
-    
+
   //   if (response.ok) {
   //     document.location.replace('/profile');
   //   } else {
-  //     alert('Failed to get highscore');
+  //     alert('Failed to create highscore');
   //   }
-  //   }
-  };
-<<<<<<< HEAD
+  // }
+//   if (score){
+//   const response = await fetch(`/api/gamepage/scores`,  {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
   
-  if (name && score && createdAt) {}
-
-
-
-  
-  document
-    .querySelector('.highscore-list')
-    .addEventListener('click', newFormHandler);
-=======
-  
->>>>>>> 8ed3328953f93f517e410c3e24b232a8c87e93e8
+//   if (response.ok) {
+//     document.location.replace('/profile');
+//   } else {
+//     alert('Failed to get highscore');
+//   }
+//   }
+};
