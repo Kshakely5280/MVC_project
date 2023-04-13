@@ -10,12 +10,12 @@ router.post('/scores', async (req, res) => {
     let highscoreData = fs.readFileSync('highscore.json', 'utf8', (error, data) => {
         error ? console.error(error) : console.log(error);
     });
-    let scoresArray = JSON.parse(highscoreData).scoresArray;
+    let scoresArray = JSON.parse(highscoreData).scoresArray.slice(0,25);
+    console.log(scoresArray)
     
-    console.log(req.body.scores);
-    console.log(req.session.name);
+
     const newObj = {score:req.body.scores, username: req.session.name}
-    scoresArray.push(newObj);
+    scoresArray.unshift(newObj);
     
     fs.writeFileSync('highscore.json', JSON.stringify({scoresArray}));
     res.status(200).end()

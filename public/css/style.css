@@ -12,5 +12,5 @@ canvas {
   }
 
 body {
-    background-color: black;
+    background-image: url(../phaserGame/assets/windowBackground.jpg)
   }
